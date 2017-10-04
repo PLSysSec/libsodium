@@ -22,7 +22,7 @@ crypto_kx_seed_keypair(unsigned char pk[crypto_kx_PUBLICKEYBYTES],
 
 // FACT
 // I don't know if we can do anything with generating randomness/entropy
-// seems to hairy for FaCT to handle
+// seems too hairy for FaCT to handle
 // (possible workaround: randomness source as a [vetted!] C extern)
 int
 crypto_kx_keypair(unsigned char pk[crypto_kx_PUBLICKEYBYTES],

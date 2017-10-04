@@ -146,6 +146,10 @@ randombytes_uniform(const uint32_t upper_bound)
     return r % upper_bound;
 }
 
+// FACT
+// I don't know if we can do anything with generating randomness/entropy
+// seems too hairy for FaCT to handle
+// (possible workaround: randomness source as a [vetted!] C extern)
 void
 randombytes_buf(void * const buf, const size_t size)
 {
