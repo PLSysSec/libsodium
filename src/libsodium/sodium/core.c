@@ -173,6 +173,10 @@ sodium_crit_leave(void)
 
 static void (*_misuse_handler)(void);
 
+// FACT
+// if we want to be able to call this from FaCT
+// as a "failure" function this would have to be
+// a C extern (and also probably marked as non-returning)
 void
 sodium_misuse(void)
 {

@@ -41,6 +41,7 @@ static const uint64_t blake2b_IV[8] = {
     0x1f83d9abfb41bd6bULL, 0x5be0cd19137e2179ULL
 };
 
+// FACT portable (with structs)
 /* LCOV_EXCL_START */
 static inline int
 blake2b_set_lastnode(blake2b_state *S)
@@ -63,6 +64,7 @@ blake2b_is_lastblock(const blake2b_state *S)
     return S->f[0] != 0;
 }
 
+// FACT portable (with structs)
 static inline int
 blake2b_set_lastblock(blake2b_state *S)
 {
@@ -84,6 +86,8 @@ static inline int blake2b_clear_lastblock( blake2b_state *S )
 static inline int
 blake2b_increment_counter(blake2b_state *S, const uint64_t inc)
 {
+  // FACT this looks like some sort of arch-dependent
+  // muckery that we can abstract away
 #ifdef HAVE_TI_MODE
     uint128_t t = ((uint128_t) S->t[1] << 64) | S->t[0];
     t += inc;
@@ -324,6 +328,8 @@ blake2b_init_key_salt_personal(blake2b_state *S, const uint8_t outlen,
     return 0;
 }
 
+// FACT all sub functions should be FaCT-able, so we
+// should be able to port this function
 /* inlen now in bytes */
 int
 blake2b_update(blake2b_state *S, const uint8_t *in, uint64_t inlen)
@@ -354,6 +360,8 @@ blake2b_update(blake2b_state *S, const uint8_t *in, uint64_t inlen)
     return 0;
 }
 
+// FACT all sub functions should be FaCT-able, so we
+// should be able to port this function
 int
 blake2b_final(blake2b_state *S, uint8_t *out, uint8_t outlen)
 {
@@ -377,6 +385,8 @@ blake2b_final(blake2b_state *S, uint8_t *out, uint8_t outlen)
            2 * BLAKE2B_BLOCKBYTES - S->buflen); /* Padding */
     blake2b_compress(S, S->buf);
 
+    // FACT memcpy-with-endianness seems
+    // like a good stdlib function to have
 #ifdef NATIVE_LITTLE_ENDIAN
     memcpy(out, &S->h[0], outlen);
 #else
@@ -396,6 +406,8 @@ blake2b_final(blake2b_state *S, uint8_t *out, uint8_t outlen)
     return 0;
 }
 
+// FACT may be portable;
+// if not, can be split into a C wrapper and a FaCT function
 /* inlen, at least, should be uint64_t. Others can be size_t. */
 int
 blake2b(uint8_t *out, const void *in, const void *key, const uint8_t outlen,
@@ -403,6 +415,10 @@ blake2b(uint8_t *out, const void *in, const void *key, const uint8_t outlen,
 {
     blake2b_state S[1];
 
+    // FACT see note at `sodium_misuse()` definition
+    // otherwise these checks would have to be in a C wrapper
+    // and the actual FaCT code would start at the stuff
+    // below the checks
     /* Verify parameters */
     if (NULL == in && inlen > 0) {
         sodium_misuse();

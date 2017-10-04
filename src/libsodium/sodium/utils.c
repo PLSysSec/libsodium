@@ -75,6 +75,7 @@ _sodium_dummy_symbol_to_prevent_memzero_lto(void *const  pnt,
 #endif
 /* LCOV_EXCL_STOP */
 
+// FACT this should be in FaCT's stdlib
 void
 sodium_memzero(void *const pnt, const size_t len)
 {
@@ -88,8 +89,10 @@ sodium_memzero(void *const pnt, const size_t len)
     explicit_bzero(pnt, len);
 #elif HAVE_WEAK_SYMBOLS
     memset(pnt, 0, len);
+    // FACT vvv check this out (preventing link time optimization?)
     _sodium_dummy_symbol_to_prevent_memzero_lto(pnt, len);
 #else
+    // FACT volatile magic
     volatile unsigned char *volatile pnt_ =
         (volatile unsigned char *volatile) pnt;
     size_t i = (size_t) 0U;

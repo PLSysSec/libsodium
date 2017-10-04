@@ -2,6 +2,8 @@
 #include "crypto_shorthash.h"
 #include "randombytes.h"
 
+// FACT these are just wrappers
+
 size_t
 crypto_shorthash_bytes(void)
 {
@@ -24,6 +26,7 @@ int
 crypto_shorthash(unsigned char *out, const unsigned char *in,
                  unsigned long long inlen, const unsigned char *k)
 {
+    // FACT siphash24/ref/shorthash_siphash24_ref.c
     return crypto_shorthash_siphash24(out, in, inlen, k);
 }
 

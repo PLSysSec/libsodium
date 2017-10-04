@@ -3,6 +3,19 @@
 
 #include "private/common.h"
 
+/** FACT
+ * what would be the best way to
+ * implement something like this?
+ * my proposal: instead of v0..3,
+ * just have a single uint64x4 v
+ * and instead of `SIPROUND;` do
+ * `v = sipround(v);`
+ * or if you really want, you can
+ * do `sipround(ref v);`
+ * and then have an `inline` keyword
+ * to tell the compiler that sipround
+ * should be inlined
+ **/
 #define SIPROUND             \
     do {                     \
         v0 += v1;            \

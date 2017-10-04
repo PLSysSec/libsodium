@@ -7,6 +7,7 @@ crypto_scalarmult_primitive(void)
     return crypto_scalarmult_PRIMITIVE;
 }
 
+// FACT trivial
 int
 crypto_scalarmult_base(unsigned char *q, const unsigned char *n)
 {

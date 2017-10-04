@@ -6,6 +6,7 @@
 #include "blake2.h"
 #include "crypto_generichash_blake2b.h"
 
+// FACT this is basically just a wrapper
 int
 crypto_generichash_blake2b(unsigned char *out, size_t outlen,
                            const unsigned char *in, unsigned long long inlen,
@@ -87,6 +88,7 @@ crypto_generichash_blake2b_init_salt_personal(
     return 0;
 }
 
+// FACT this is just a wrapper
 int
 crypto_generichash_blake2b_update(crypto_generichash_blake2b_state *state,
                                   const unsigned char *in,
@@ -95,6 +97,7 @@ crypto_generichash_blake2b_update(crypto_generichash_blake2b_state *state,
     return blake2b_update(state, (const uint8_t *) in, (uint64_t) inlen);
 }
 
+// FACT this is just a wrapper
 int
 crypto_generichash_blake2b_final(crypto_generichash_blake2b_state *state,
                                  unsigned char *out, const size_t outlen)

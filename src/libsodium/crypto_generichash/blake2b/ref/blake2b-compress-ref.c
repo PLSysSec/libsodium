@@ -27,6 +27,9 @@ static const uint8_t blake2b_sigma[12][16] = {
     { 14, 10, 4, 8, 9, 15, 13, 6, 1, 12, 0, 2, 11, 7, 5, 3 }
 };
 
+// FACT
+// this looks like the sort of function that would
+// benefit greatly from FaCT's language primitives
 int
 blake2b_compress_ref(blake2b_state *S, const uint8_t block[BLAKE2B_BLOCKBYTES])
 {

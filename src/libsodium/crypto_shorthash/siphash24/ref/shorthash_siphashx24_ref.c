@@ -2,6 +2,8 @@
 #include "private/common.h"
 #include "shorthash_siphash_ref.h"
 
+// FACT see note in shorthash_siphash24_ref.c
+
 int
 crypto_shorthash_siphashx24(unsigned char *out, const unsigned char *in,
                             unsigned long long inlen, const unsigned char *k)

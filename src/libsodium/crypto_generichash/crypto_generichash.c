@@ -50,6 +50,7 @@ crypto_generichash_statebytes(void)
     return (sizeof(crypto_generichash_state) + (size_t) 63U) & ~(size_t) 63U;
 }
 
+// FACT just a wrapper
 int
 crypto_generichash(unsigned char *out, size_t outlen, const unsigned char *in,
                    unsigned long long inlen, const unsigned char *key,
@@ -67,6 +68,7 @@ crypto_generichash_init(crypto_generichash_state *state,
         ((crypto_generichash_blake2b_state *) state, key, keylen, outlen);
 }
 
+// FACT portable (with struct support)
 int
 crypto_generichash_update(crypto_generichash_state *state,
                           const unsigned char *in,
@@ -76,6 +78,7 @@ crypto_generichash_update(crypto_generichash_state *state,
         ((crypto_generichash_blake2b_state *) state, in, inlen);
 }
 
+// FACT portable (with struct support)
 int
 crypto_generichash_final(crypto_generichash_state *state,
                          unsigned char *out, const size_t outlen)

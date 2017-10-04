@@ -23,6 +23,9 @@ crypto_scalarmult_curve25519(unsigned char *q, const unsigned char *n,
     size_t                 i;
     volatile unsigned char d = 0;
 
+    // FACT ok this might be a little weird:
+    // function pointers / fn ptr indirect through a struct
+    // also proper implementation selected via preprocessor logic
     if (implementation->mult(q, n, p) != 0) {
         return -1; /* LCOV_EXCL_LINE */
     }
@@ -35,6 +38,7 @@ crypto_scalarmult_curve25519(unsigned char *q, const unsigned char *n,
 int
 crypto_scalarmult_curve25519_base(unsigned char *q, const unsigned char *n)
 {
+    // FACT see note above
     return implementation->mult_base(q, n);
 }
 

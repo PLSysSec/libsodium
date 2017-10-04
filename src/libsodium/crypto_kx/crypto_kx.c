@@ -9,6 +9,7 @@
 #include "randombytes.h"
 #include "utils.h"
 
+// FACT trivial
 int
 crypto_kx_seed_keypair(unsigned char pk[crypto_kx_PUBLICKEYBYTES],
                        unsigned char sk[crypto_kx_SECRETKEYBYTES],
@@ -19,6 +20,10 @@ crypto_kx_seed_keypair(unsigned char pk[crypto_kx_PUBLICKEYBYTES],
     return crypto_scalarmult_base(pk, sk);
 }
 
+// FACT
+// I don't know if we can do anything with generating randomness/entropy
+// seems to hairy for FaCT to handle
+// (possible workaround: randomness source as a [vetted!] C extern)
 int
 crypto_kx_keypair(unsigned char pk[crypto_kx_PUBLICKEYBYTES],
                   unsigned char sk[crypto_kx_SECRETKEYBYTES])
@@ -30,6 +35,8 @@ crypto_kx_keypair(unsigned char pk[crypto_kx_PUBLICKEYBYTES],
     return crypto_scalarmult_base(pk, sk);
 }
 
+// FACT probably port this one?
+// but we need struct support for `crypto_generichash_state`
 int
 crypto_kx_client_session_keys(unsigned char rx[crypto_kx_SESSIONKEYBYTES],
                               unsigned char tx[crypto_kx_SESSIONKEYBYTES],
@@ -42,6 +49,7 @@ crypto_kx_client_session_keys(unsigned char rx[crypto_kx_SESSIONKEYBYTES],
     unsigned char            keys[2 * crypto_kx_SESSIONKEYBYTES];
     int                      i;
 
+    // FACT vvv this stuff can't/shouldn't be FaCT
     if (rx == NULL) {
         rx = tx;
     }
@@ -51,6 +59,7 @@ crypto_kx_client_session_keys(unsigned char rx[crypto_kx_SESSIONKEYBYTES],
     if (rx == NULL) {
         sodium_misuse(); /* LCOV_EXCL_LINE */
     }
+    // FACT ^^^ end non-FaCT
     if (crypto_scalarmult(q, client_sk, server_pk) != 0) {
         return -1;
     }
@@ -71,6 +80,8 @@ crypto_kx_client_session_keys(unsigned char rx[crypto_kx_SESSIONKEYBYTES],
     return 0;
 }
 
+// FACT
+// this is basically the same function as above
 int
 crypto_kx_server_session_keys(unsigned char rx[crypto_kx_SESSIONKEYBYTES],
                               unsigned char tx[crypto_kx_SESSIONKEYBYTES],
@@ -112,30 +123,35 @@ crypto_kx_server_session_keys(unsigned char rx[crypto_kx_SESSIONKEYBYTES],
     return 0;
 }
 
+// FACT constant function
 size_t
 crypto_kx_publickeybytes(void)
 {
     return crypto_kx_PUBLICKEYBYTES;
 }
 
+// FACT constant function
 size_t
 crypto_kx_secretkeybytes(void)
 {
     return crypto_kx_SECRETKEYBYTES;
 }
 
+// FACT constant function
 size_t
 crypto_kx_seedbytes(void)
 {
     return crypto_kx_SEEDBYTES;
 }
 
+// FACT constant function
 size_t
 crypto_kx_sessionkeybytes(void)
 {
     return crypto_kx_SESSIONKEYBYTES;
 }
 
+// FACT constant function
 const char *
 crypto_kx_primitive(void)
 {

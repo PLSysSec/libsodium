@@ -2,6 +2,13 @@
 #include "private/common.h"
 #include "shorthash_siphash_ref.h"
 
+/** FACT
+ * seems a good candidate for porting
+ * in is secret, out should be public and will likely
+ * need to be declassified for that to happen.
+ * inlen is public and k is a key I guess? so secret
+ **/
+
 int
 crypto_shorthash_siphash24(unsigned char *out, const unsigned char *in,
                            unsigned long long inlen, const unsigned char *k)
@@ -26,6 +33,7 @@ crypto_shorthash_siphash24(unsigned char *out, const unsigned char *in,
     for (; in != end; in += 8) {
         m = LOAD64_LE(in);
         v3 ^= m;
+        // FACT see note in shorthash_siphash24_ref.h
         SIPROUND;
         SIPROUND;
         v0 ^= m;
