@@ -2,6 +2,8 @@
 #include "crypto_secretbox.h"
 #include "randombytes.h"
 
+// FACT this whole file is just constants and simple wrappers
+
 size_t
 crypto_secretbox_keybytes(void)
 {

@@ -15,6 +15,7 @@ Public domain.
 
 #ifndef HAVE_AMD64_ASM
 
+// FACT FaCTable
 static int
 stream_ref(unsigned char *c, unsigned long long clen, const unsigned char *n,
            const unsigned char *k)
@@ -60,6 +61,7 @@ stream_ref(unsigned char *c, unsigned long long clen, const unsigned char *n,
     return 0;
 }
 
+// FACT FaCTable
 static int
 stream_ref_xor_ic(unsigned char *c, const unsigned char *m,
                   unsigned long long mlen, const unsigned char *n, uint64_t ic,

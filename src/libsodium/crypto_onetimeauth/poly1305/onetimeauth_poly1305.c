@@ -10,9 +10,11 @@
 # include "sse2/poly1305_sse2.h"
 #endif
 
+// FACT ok
 static const crypto_onetimeauth_poly1305_implementation *implementation =
     &crypto_onetimeauth_poly1305_donna_implementation;
 
+// FACT abstracted wrapper
 int
 crypto_onetimeauth_poly1305(unsigned char *out, const unsigned char *in,
                             unsigned long long inlen, const unsigned char *k)
@@ -20,6 +22,7 @@ crypto_onetimeauth_poly1305(unsigned char *out, const unsigned char *in,
     return implementation->onetimeauth(out, in, inlen, k);
 }
 
+// FACT abstracted wrapper
 int
 crypto_onetimeauth_poly1305_verify(const unsigned char *h,
                                    const unsigned char *in,
@@ -29,6 +32,7 @@ crypto_onetimeauth_poly1305_verify(const unsigned char *h,
     return implementation->onetimeauth_verify(h, in, inlen, k);
 }
 
+// FACT abstracted wrapper
 int
 crypto_onetimeauth_poly1305_init(crypto_onetimeauth_poly1305_state *state,
                                  const unsigned char *key)
@@ -36,6 +40,7 @@ crypto_onetimeauth_poly1305_init(crypto_onetimeauth_poly1305_state *state,
     return implementation->onetimeauth_init(state, key);
 }
 
+// FACT abstracted wrapper
 int
 crypto_onetimeauth_poly1305_update(crypto_onetimeauth_poly1305_state *state,
                                    const unsigned char *in,
@@ -44,6 +49,7 @@ crypto_onetimeauth_poly1305_update(crypto_onetimeauth_poly1305_state *state,
     return implementation->onetimeauth_update(state, in, inlen);
 }
 
+// FACT abstracted wrapper
 int
 crypto_onetimeauth_poly1305_final(crypto_onetimeauth_poly1305_state *state,
                                   unsigned char *out)

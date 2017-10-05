@@ -37,6 +37,7 @@ typedef struct poly1305_state_internal_t {
     unsigned char      final;
 } poly1305_state_internal_t;
 
+// FACT bit swizzling
 static void
 poly1305_init(poly1305_state_internal_t *st, const unsigned char key[32])
 {
@@ -64,6 +65,7 @@ poly1305_init(poly1305_state_internal_t *st, const unsigned char key[32])
     st->final    = 0;
 }
 
+// FACT bit swizzling
 static void
 poly1305_blocks(poly1305_state_internal_t *st, const unsigned char *m,
                 unsigned long long bytes)
@@ -138,6 +140,7 @@ poly1305_blocks(poly1305_state_internal_t *st, const unsigned char *m,
     st->h[2] = h2;
 }
 
+// FACT bit swizzling
 static POLY1305_NOINLINE void
 poly1305_finish(poly1305_state_internal_t *st, unsigned char mac[16])
 {

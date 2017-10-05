@@ -1,2 +1,3 @@
-crypto_shorthash
 crypto_kx
+crypto_secretbox/crypto_secretbox_easy.c
+crypto_shorthash

@@ -4,6 +4,7 @@
 #include "private/common.h"
 #include "utils.h"
 
+// FACT ideally, with FaCT, one implementation will suffice for both 32- and 64-bit
 #ifdef HAVE_TI_MODE
 #include "poly1305_donna64.h"
 #else
@@ -11,6 +12,7 @@
 #endif
 #include "../onetimeauth_poly1305.h"
 
+// FACT need structs for state
 static void
 poly1305_update(poly1305_state_internal_t *st, const unsigned char *m,
                 unsigned long long bytes)
@@ -55,6 +57,7 @@ poly1305_update(poly1305_state_internal_t *st, const unsigned char *m,
     }
 }
 
+// FACT need structs for state
 static int
 crypto_onetimeauth_poly1305_donna(unsigned char *out, const unsigned char *m,
                                   unsigned long long   inlen,
@@ -69,6 +72,7 @@ crypto_onetimeauth_poly1305_donna(unsigned char *out, const unsigned char *m,
     return 0;
 }
 
+// FACT simple wrapper + check
 static int
 crypto_onetimeauth_poly1305_donna_init(crypto_onetimeauth_poly1305_state *state,
                                        const unsigned char *key)
@@ -80,6 +84,7 @@ crypto_onetimeauth_poly1305_donna_init(crypto_onetimeauth_poly1305_state *state,
     return 0;
 }
 
+// FACT simple wrapper
 static int
 crypto_onetimeauth_poly1305_donna_update(
     crypto_onetimeauth_poly1305_state *state, const unsigned char *in,
@@ -90,6 +95,7 @@ crypto_onetimeauth_poly1305_donna_update(
     return 0;
 }
 
+// FACT simple wrapper
 static int
 crypto_onetimeauth_poly1305_donna_final(
     crypto_onetimeauth_poly1305_state *state, unsigned char *out)
@@ -99,6 +105,7 @@ crypto_onetimeauth_poly1305_donna_final(
     return 0;
 }
 
+// FACT simple wrapper + check
 static int
 crypto_onetimeauth_poly1305_donna_verify(const unsigned char *h,
                                          const unsigned char *in,
@@ -112,6 +119,7 @@ crypto_onetimeauth_poly1305_donna_verify(const unsigned char *h,
     return crypto_verify_16(h, correct);
 }
 
+// FACT all functions FaCTable (once we have state structs)
 struct crypto_onetimeauth_poly1305_implementation
     crypto_onetimeauth_poly1305_donna_implementation = {
         SODIUM_C99(.onetimeauth =) crypto_onetimeauth_poly1305_donna,

@@ -13,6 +13,7 @@ Public domain.
 #define ROUNDS 20
 #define U32C(v) (v##U)
 
+// FACT basic bit shuffling
 int
 crypto_core_hsalsa20(unsigned char *out,
                      const unsigned char *in,

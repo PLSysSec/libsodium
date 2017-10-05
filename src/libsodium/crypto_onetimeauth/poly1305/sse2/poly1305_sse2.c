@@ -74,6 +74,8 @@ _fakealign_mm_loadl_epi64(const void *m)
 # define _mm_loadl_epi64(X) _fakealign_mm_loadl_epi64(X)
 #endif
 
+// FACT fast copy function I guess
+// but it's not necessarily aligned...?
 /* copy 0-31 bytes */
 static inline void
 poly1305_block_copy31(unsigned char *dst, const unsigned char *src,
@@ -198,6 +200,7 @@ poly1305_init_ext(poly1305_state_internal_t *st, const unsigned char key[32],
     st->leftover = 0U;
 }
 
+// FACT wew ok just large-bit swizzling
 static POLY1305_NOINLINE void
 poly1305_blocks(poly1305_state_internal_t *st, const unsigned char *m,
                 unsigned long long bytes)
@@ -761,6 +764,7 @@ poly1305_blocks(poly1305_state_internal_t *st, const unsigned char *m,
     }
 }
 
+// FACT should be FaCT-able other than the state struct
 static void
 poly1305_update(poly1305_state_internal_t *st, const unsigned char *m,
                 unsigned long long bytes)
@@ -805,6 +809,7 @@ poly1305_update(poly1305_state_internal_t *st, const unsigned char *m,
     }
 }
 
+// FACT some large-bit swizzling
 static POLY1305_NOINLINE void
 poly1305_finish_ext(poly1305_state_internal_t *st, const unsigned char *m,
                     unsigned long long leftover, unsigned char mac[16])
@@ -872,6 +877,7 @@ poly1305_finish_ext(poly1305_state_internal_t *st, const unsigned char *m,
     sodium_memzero((void *) st, sizeof *st);
 }
 
+// FACT simple wrapper
 static void
 poly1305_finish(poly1305_state_internal_t *st, unsigned char mac[16])
 {

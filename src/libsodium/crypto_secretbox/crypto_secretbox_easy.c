@@ -13,6 +13,26 @@
 #include "private/common.h"
 #include "utils.h"
 
+/** FACT
+ * c (ciphertext out) is public mut
+ * mac (hash out) is public mut
+ * m (message in) is secret
+ * mlen is public
+ * n (nonce in) is public
+ * k (key in) is secret
+ *
+ * we'll need struct support for `crypto_onetimeauth_poly1305_state`
+ *
+ * according to the docs, libsodium allows for
+ * c and m to overlap; does FaCT make any assumptions
+ * about buffers (not) aliasing? if so, this might
+ * be a bit complicated.
+ *
+ * one solution (if we require no aliasing):
+ * have a C wrapper that memmoves m to c, then
+ * the FaCT function encrypts c in place like this
+ * function basically does anyway
+ **/
 int
 crypto_secretbox_detached(unsigned char *c, unsigned char *mac,
                           const unsigned char *m,
@@ -67,6 +87,7 @@ crypto_secretbox_detached(unsigned char *c, unsigned char *mac,
     return 0;
 }
 
+// FACT wrapper for function above; see notes there
 int
 crypto_secretbox_easy(unsigned char *c, const unsigned char *m,
                       unsigned long long mlen, const unsigned char *n,
@@ -79,6 +100,24 @@ crypto_secretbox_easy(unsigned char *c, const unsigned char *m,
                                      c, m, mlen, n, k);
 }
 
+/** FACT
+ * m (plaintext out) is secret mut
+ * c (ciphertext in) is public
+ * mac (hash in) is public
+ * clen is public
+ * n (nonce in) is public
+ * k (key in) is secret
+ *
+ * according to the docs, libsodium allows for
+ * c and m to overlap; does FaCT make any assumptions
+ * about buffers (not) aliasing? if so, this might
+ * be a bit complicated.
+ *
+ * one solution (if we require no aliasing):
+ * have a C wrapper that memmoves c to m, then
+ * the FaCT function decrypts m in place like this
+ * function basically does anyway
+ **/
 int
 crypto_secretbox_open_detached(unsigned char *m, const unsigned char *c,
                                const unsigned char *mac,
@@ -130,6 +169,7 @@ crypto_secretbox_open_detached(unsigned char *m, const unsigned char *c,
     return 0;
 }
 
+// FACT wrapper for function above; see notes there
 int
 crypto_secretbox_open_easy(unsigned char *m, const unsigned char *c,
                            unsigned long long clen, const unsigned char *n,

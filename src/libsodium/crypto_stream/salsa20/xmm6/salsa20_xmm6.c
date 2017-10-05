@@ -11,6 +11,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+  // FACT these are defined in assembly (in this same folder)
 extern int stream_salsa20_xmm6(unsigned char *c, unsigned long long clen,
                                const unsigned char *n, const unsigned char *k);
 

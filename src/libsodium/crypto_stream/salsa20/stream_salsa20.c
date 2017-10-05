@@ -18,9 +18,11 @@
 #endif
 
 #if HAVE_AMD64_ASM
+// FACT the xmm6 implementations are in assembly
 static const crypto_stream_salsa20_implementation *implementation =
     &crypto_stream_salsa20_xmm6_implementation;
 #else
+// FACT defines two functions; both are FaCTable
 static const crypto_stream_salsa20_implementation *implementation =
     &crypto_stream_salsa20_ref_implementation;
 #endif
@@ -43,6 +45,7 @@ crypto_stream_salsa20_messagebytes_max(void)
     return crypto_stream_salsa20_MESSAGEBYTES_MAX;
 }
 
+// FACT abstracted wrapper
 int
 crypto_stream_salsa20(unsigned char *c, unsigned long long clen,
                       const unsigned char *n, const unsigned char *k)
@@ -50,6 +53,7 @@ crypto_stream_salsa20(unsigned char *c, unsigned long long clen,
     return implementation->stream(c, clen, n, k);
 }
 
+// FACT abstracted wrapper
 int
 crypto_stream_salsa20_xor_ic(unsigned char *c, const unsigned char *m,
                              unsigned long long mlen,
@@ -59,6 +63,7 @@ crypto_stream_salsa20_xor_ic(unsigned char *c, const unsigned char *m,
     return implementation->stream_xor_ic(c, m, mlen, n, ic, k);
 }
 
+// FACT abstracted wrapper
 int
 crypto_stream_salsa20_xor(unsigned char *c, const unsigned char *m,
                           unsigned long long mlen, const unsigned char *n,

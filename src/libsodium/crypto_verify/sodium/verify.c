@@ -6,6 +6,7 @@
 #include "crypto_verify_32.h"
 #include "crypto_verify_64.h"
 
+// FACT what exactly is the point of these
 size_t
 crypto_verify_16_bytes(void)
 {
@@ -31,6 +32,13 @@ crypto_verify_64_bytes(void)
 # endif
 # include <emmintrin.h>
 
+/** FACT
+ * I'm assuming this is 128-bit just for vector parallelism
+ * but I can't really tell because this looks super muddled
+ * also why is everything volatile
+ *
+ * as far as I can tell, this is a ct comparison function
+ **/
 static inline int
 crypto_verify_n(const unsigned char *x_, const unsigned char *y_,
                 const int n)
@@ -60,10 +68,13 @@ crypto_verify_n(const unsigned char *x_, const unsigned char *y_,
 
 #else
 
+// FACT bit swizzling
+// as far as I can tell, this is a ct comparison function
 static inline int
 crypto_verify_n(const unsigned char *x_, const unsigned char *y_,
                 const int n)
 {
+    // FACT why are these volatile?
     const volatile unsigned char *volatile x =
         (const volatile unsigned char *volatile) x_;
     const volatile unsigned char *volatile y =
@@ -79,18 +90,21 @@ crypto_verify_n(const unsigned char *x_, const unsigned char *y_,
 
 #endif
 
+// FACT wrapper
 int
 crypto_verify_16(const unsigned char *x, const unsigned char *y)
 {
     return crypto_verify_n(x, y, crypto_verify_16_BYTES);
 }
 
+// FACT wrapper
 int
 crypto_verify_32(const unsigned char *x, const unsigned char *y)
 {
     return crypto_verify_n(x, y, crypto_verify_32_BYTES);
 }
 
+// FACT wrapper
 int
 crypto_verify_64(const unsigned char *x, const unsigned char *y)
 {

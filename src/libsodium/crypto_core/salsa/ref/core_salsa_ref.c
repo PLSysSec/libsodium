@@ -7,6 +7,7 @@
 #include "crypto_core_salsa208.h"
 #include "private/common.h"
 
+// FACT basic bit shuffling
 static void
 crypto_core_salsa(unsigned char *out, const unsigned char *in,
                   const unsigned char *k, const unsigned char *c,
@@ -94,6 +95,7 @@ crypto_core_salsa(unsigned char *out, const unsigned char *in,
     STORE32_LE(out + 60, x15 + j15);
 }
 
+// FACT simple wrapper
 int
 crypto_core_salsa20(unsigned char *out, const unsigned char *in,
                     const unsigned char *k, const unsigned char *c)
