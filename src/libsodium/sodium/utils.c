@@ -115,6 +115,7 @@ _sodium_dummy_symbol_to_prevent_memcmp_lto(const unsigned char *b1,
 }
 #endif
 
+// FACT how is this different from crypto_verify_n?
 int
 sodium_memcmp(const void *const b1_, const void *const b2_, size_t len)
 {

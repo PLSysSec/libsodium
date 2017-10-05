@@ -33,6 +33,7 @@ crypto_auth_hmacsha512_keygen(unsigned char k[crypto_auth_hmacsha512_KEYBYTES])
     randombytes_buf(k, crypto_auth_hmacsha512_KEYBYTES);
 }
 
+// FACT FaCTable other than note below
 int
 crypto_auth_hmacsha512_init(crypto_auth_hmacsha512_state *state,
                             const unsigned char *key, size_t keylen)
@@ -45,6 +46,7 @@ crypto_auth_hmacsha512_init(crypto_auth_hmacsha512_state *state,
         crypto_hash_sha512_init(&state->ictx);
         crypto_hash_sha512_update(&state->ictx, key, keylen);
         crypto_hash_sha512_final(&state->ictx, khash);
+        // FACT this conditional aliasing is going to be tricky in FaCT
         key    = khash;
         keylen = 64;
     }
@@ -68,6 +70,7 @@ crypto_auth_hmacsha512_init(crypto_auth_hmacsha512_state *state,
     return 0;
 }
 
+// FACT simple wrapper
 int
 crypto_auth_hmacsha512_update(crypto_auth_hmacsha512_state *state,
                               const unsigned char *in, unsigned long long inlen)
@@ -77,6 +80,7 @@ crypto_auth_hmacsha512_update(crypto_auth_hmacsha512_state *state,
     return 0;
 }
 
+// FACT basically a wrapper
 int
 crypto_auth_hmacsha512_final(crypto_auth_hmacsha512_state *state,
                              unsigned char                *out)

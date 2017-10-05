@@ -37,6 +37,7 @@
 #include "private/common.h"
 #include "utils.h"
 
+// FACT this is a bigendian memcpy (add to stdlib?)
 static void
 be64enc_vect(unsigned char *dst, const uint64_t *src, size_t len)
 {
@@ -110,6 +111,7 @@ static const uint64_t Krnd[80] = {
     W[i + ii + 16] =   \
         s1(W[i + ii + 14]) + W[i + ii + 9] + s0(W[i + ii + 1]) + W[i + ii]
 
+// FACT just a ton of bit swizzling
 static void
 SHA512_Transform(uint64_t *state, const uint8_t block[128], uint64_t W[80],
                  uint64_t S[8])
@@ -169,6 +171,7 @@ static const uint8_t PAD[128] = {
     0,    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
 
+// FACT FaCTable
 static void
 SHA512_Pad(crypto_hash_sha512_state *state, uint64_t tmp64[80 + 8])
 {
@@ -191,6 +194,7 @@ SHA512_Pad(crypto_hash_sha512_state *state, uint64_t tmp64[80 + 8])
     SHA512_Transform(state->state, state->buf, &tmp64[0], &tmp64[80]);
 }
 
+// FACT trivial
 int
 crypto_hash_sha512_init(crypto_hash_sha512_state *state)
 {
@@ -206,6 +210,7 @@ crypto_hash_sha512_init(crypto_hash_sha512_state *state)
     return 0;
 }
 
+// FACT FaCTable
 int
 crypto_hash_sha512_update(crypto_hash_sha512_state *state,
                           const unsigned char *in, unsigned long long inlen)
@@ -255,6 +260,7 @@ crypto_hash_sha512_update(crypto_hash_sha512_state *state,
     return 0;
 }
 
+// FACT FaCTable
 int
 crypto_hash_sha512_final(crypto_hash_sha512_state *state, unsigned char *out)
 {

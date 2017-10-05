@@ -35,6 +35,7 @@ crypto_auth_hmacsha512256_keygen(
     randombytes_buf(k, crypto_auth_hmacsha512256_KEYBYTES);
 }
 
+// FACT simple wrapper
 int
 crypto_auth_hmacsha512256_init(crypto_auth_hmacsha512256_state *state,
                                const unsigned char *key, size_t keylen)
@@ -43,6 +44,7 @@ crypto_auth_hmacsha512256_init(crypto_auth_hmacsha512256_state *state,
                                        key, keylen);
 }
 
+// FACT simple wrapper
 int
 crypto_auth_hmacsha512256_update(crypto_auth_hmacsha512256_state *state,
                                  const unsigned char             *in,
@@ -52,6 +54,7 @@ crypto_auth_hmacsha512256_update(crypto_auth_hmacsha512256_state *state,
                                          in, inlen);
 }
 
+// FACT simple wrapper
 int
 crypto_auth_hmacsha512256_final(crypto_auth_hmacsha512256_state *state,
                                 unsigned char                   *out)
@@ -64,6 +67,7 @@ crypto_auth_hmacsha512256_final(crypto_auth_hmacsha512256_state *state,
     return 0;
 }
 
+// FACT augh we need state again
 int
 crypto_auth_hmacsha512256(unsigned char *out, const unsigned char *in,
                           unsigned long long inlen, const unsigned char *k)
@@ -78,6 +82,7 @@ crypto_auth_hmacsha512256(unsigned char *out, const unsigned char *in,
     return 0;
 }
 
+// FACT simple wrapper + check
 int
 crypto_auth_hmacsha512256_verify(const unsigned char *h,
                                  const unsigned char *in,
@@ -88,6 +93,8 @@ crypto_auth_hmacsha512256_verify(const unsigned char *h,
 
     crypto_auth_hmacsha512256(correct, in, inlen, k);
 
+    // FACT ...why is it comparing h and correct in three different ways
+    // and as far as I can tell the first and third are exactly the same
     return crypto_verify_32(h, correct) | (-(h == correct)) |
            sodium_memcmp(correct, h, 32);
 }
