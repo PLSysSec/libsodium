@@ -3,6 +3,12 @@
 #include "crypto_stream_xsalsa20.h"
 #include "randombytes.h"
 
+/** FACT
+ * pretty simple to FaCT
+ * c is public (once declassified) and mut
+ * m and k are secret
+ * n is public
+ **/
 int
 crypto_secretbox_xsalsa20poly1305(unsigned char *c, const unsigned char *m,
                                   unsigned long long mlen,
@@ -22,6 +28,12 @@ crypto_secretbox_xsalsa20poly1305(unsigned char *c, const unsigned char *m,
     return 0;
 }
 
+/** FACT
+ * pretty simple to FaCT
+ * m is secret mut
+ * c and n are public
+ * k is secret
+ **/
 int
 crypto_secretbox_xsalsa20poly1305_open(unsigned char *m, const unsigned char *c,
                                        unsigned long long clen,

@@ -4,6 +4,7 @@
 #include "randombytes.h"
 #include "utils.h"
 
+// FACT should be FaCTable
 int
 crypto_stream_xsalsa20(unsigned char *c, unsigned long long clen,
                        const unsigned char *n, const unsigned char *k)
@@ -18,6 +19,7 @@ crypto_stream_xsalsa20(unsigned char *c, unsigned long long clen,
     return ret;
 }
 
+// FACT should be FaCTable
 int
 crypto_stream_xsalsa20_xor_ic(unsigned char *c, const unsigned char *m,
                               unsigned long long mlen, const unsigned char *n,
@@ -33,6 +35,7 @@ crypto_stream_xsalsa20_xor_ic(unsigned char *c, const unsigned char *m,
     return ret;
 }
 
+// FACT just a wrapper
 int
 crypto_stream_xsalsa20_xor(unsigned char *c, const unsigned char *m,
                            unsigned long long mlen, const unsigned char *n,

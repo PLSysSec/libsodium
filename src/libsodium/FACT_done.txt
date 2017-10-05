@@ -1,3 +1,4 @@
 crypto_kx
-crypto_secretbox/crypto_secretbox_easy.c
+crypto_secretbox/crypto_secretbox.c       <-- probably easier to port
+crypto_secretbox/crypto_secretbox_easy.c  <-- probably harder to port
 crypto_shorthash
