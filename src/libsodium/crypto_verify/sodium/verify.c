@@ -32,12 +32,28 @@ crypto_verify_64_bytes(void)
 # endif
 # include <emmintrin.h>
 
+// FACT crypto_verify_n exists solely to be inlined with
+// fixed values of n (crypto_verify_16/32/64)
+
 /** FACT
  * I'm assuming this is 128-bit just for vector parallelism
  * but I can't really tell because this looks super muddled
  * also why is everything volatile
  *
- * as far as I can tell, this is a ct comparison function
+ * jedisct1:
+ * These functions are typically used to compare secrets or authentication tags
+ * with expected values. We try to achieve a couple things here:
+ *
+ * - make the execution time independent of the values being compared
+ * - minimize the time secrets will be kept in registers
+ * - avoid LTO if comparisons are made against hard-coded secrets.
+ * - still keep these functions fairly fast, since they can be called very frequently.
+ *
+ * Unlike general purpose registers, SIMD registers tend to not be quickly
+ * reused. Since they are also wider, they also hold bigger chunks of these
+ * secrets. Making them volatile has a small cost (compare the generated code
+ * with/without), but is necessary to prevent the final zeroing from being
+ * optimized.
  **/
 static inline int
 crypto_verify_n(const unsigned char *x_, const unsigned char *y_,

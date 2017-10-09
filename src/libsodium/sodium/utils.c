@@ -90,6 +90,13 @@ sodium_memzero(void *const pnt, const size_t len)
 #elif HAVE_WEAK_SYMBOLS
     memset(pnt, 0, len);
     // FACT vvv check this out (preventing link time optimization?)
+    /** jedisct1:
+     * Yes. Note that a compiler could still replace the function call with a
+     * check of the symbol address against the address of the no-op function,
+     * and use an optimized version if there is a match. I don't know of an
+     * implementation doing this and certainly none of the supported platforms
+     * do, and the build system doesn't enable LTO anyway.
+     **/
     _sodium_dummy_symbol_to_prevent_memzero_lto(pnt, len);
 #else
     // FACT volatile magic
@@ -116,6 +123,8 @@ _sodium_dummy_symbol_to_prevent_memcmp_lto(const unsigned char *b1,
 #endif
 
 // FACT how is this different from crypto_verify_n?
+// from jedisct1: crypto_verify_n is meant to be internal and inlined for specific lengths;
+// sodium_memcmp is public API and is general for any length
 int
 sodium_memcmp(const void *const b1_, const void *const b2_, size_t len)
 {
