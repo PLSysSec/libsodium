@@ -85,10 +85,12 @@ argon2_hash(const uint32_t t_cost, const uint32_t m_cost,
             const size_t hashlen, char *encoded, const size_t encodedlen,
             argon2_type type)
 {
+    //FACT: argon2_context is struct? we couldn't do struct
     argon2_context context;
     int            result;
     uint8_t       *out;
 
+    //FACT: a bunch of condition check based on public information
     if (pwdlen > ARGON2_MAX_PWD_LENGTH) {
         return ARGON2_PWD_TOO_LONG;
     }
@@ -101,11 +103,13 @@ argon2_hash(const uint32_t t_cost, const uint32_t m_cost,
         return ARGON2_SALT_TOO_LONG;
     }
 
+    //FACT: malloc for output
     out = (uint8_t *) malloc(hashlen);
     if (!out) {
         return ARGON2_MEMORY_ALLOCATION_ERROR;
     }
 
+    //FACT: set context member
     context.out       = (uint8_t *) out;
     context.outlen    = (uint32_t) hashlen;
     context.pwd       = (uint8_t *) pwd;
@@ -122,6 +126,7 @@ argon2_hash(const uint32_t t_cost, const uint32_t m_cost,
     context.threads   = parallelism;
     context.flags     = ARGON2_DEFAULT_FLAGS;
 
+    //FACT: -->argon2_ctx this file, line 27
     result = argon2_ctx(&context, type);
 
     if (result != ARGON2_OK) {
@@ -162,6 +167,7 @@ argon2i_hash_encoded(const uint32_t t_cost, const uint32_t m_cost,
                        NULL, hashlen, encoded, encodedlen, Argon2_i);
 }
 
+//FACT: wrapper function
 int
 argon2i_hash_raw(const uint32_t t_cost, const uint32_t m_cost,
                  const uint32_t parallelism, const void *pwd,
@@ -183,6 +189,7 @@ argon2id_hash_encoded(const uint32_t t_cost, const uint32_t m_cost,
                        NULL, hashlen, encoded, encodedlen, Argon2_id);
 }
 
+//FACT: wrapper function
 int
 argon2id_hash_raw(const uint32_t t_cost, const uint32_t m_cost,
                   const uint32_t parallelism, const void *pwd,

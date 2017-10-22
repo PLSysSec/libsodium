@@ -155,9 +155,11 @@ crypto_pwhash(unsigned char * const out, unsigned long long outlen,
               unsigned long long opslimit, size_t memlimit, int alg)
 {
     switch (alg) {
+    //FACT: --> argon2/pwhash_argon2i.c line139
     case crypto_pwhash_ALG_ARGON2I13:
         return crypto_pwhash_argon2i(out, outlen, passwd, passwdlen, salt,
                                      opslimit, memlimit, alg);
+    //FACT: --> argon2/pwhash_argon2id.c line135
     case crypto_pwhash_ALG_ARGON2ID13:
         return crypto_pwhash_argon2id(out, outlen, passwd, passwdlen, salt,
                                       opslimit, memlimit, alg);

@@ -96,18 +96,22 @@ crypto_stream_chacha20_ietf_xor(unsigned char *c, const unsigned char *m,
     return implementation->stream_ietf_xor_ic(c, m, mlen, n, 0U, k);
 }
 
+//FACT: doing random
 void
 crypto_stream_chacha20_ietf_keygen(unsigned char k[crypto_stream_chacha20_ietf_KEYBYTES])
 {
     randombytes_buf(k, crypto_stream_chacha20_ietf_KEYBYTES);
 }
 
+//FACT: doing random
 void
 crypto_stream_chacha20_keygen(unsigned char k[crypto_stream_chacha20_KEYBYTES])
 {
     randombytes_buf(k, crypto_stream_chacha20_KEYBYTES);
 }
 
+//FACT: conditional compilation
+//could we do such thing in the code?
 int
 _crypto_stream_chacha20_pick_best_implementation(void)
 {

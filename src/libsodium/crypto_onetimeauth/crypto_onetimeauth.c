@@ -2,6 +2,7 @@
 #include "crypto_onetimeauth.h"
 #include "randombytes.h"
 
+// FACT: not interesting
 size_t
 crypto_onetimeauth_statebytes(void)
 {
@@ -65,6 +66,7 @@ crypto_onetimeauth_primitive(void)
     return crypto_onetimeauth_PRIMITIVE;
 }
 
+//FACT: doing randomize 
 void crypto_onetimeauth_keygen(unsigned char k[crypto_onetimeauth_KEYBYTES])
 {
     randombytes_buf(k, crypto_onetimeauth_KEYBYTES);

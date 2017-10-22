@@ -136,6 +136,10 @@ crypto_pwhash_argon2i_memlimit_sensitive(void)
     return crypto_pwhash_argon2i_MEMLIMIT_SENSITIVE;
 }
 
+//FACT: checks if the password is within the MIN MAX range.
+//      MIN MAX should be public information so it is ok to return early
+//      if all conditions are satisfied, call hash function to check
+//      the password.
 int
 crypto_pwhash_argon2i(unsigned char *const out, unsigned long long outlen,
                       const char *const passwd, unsigned long long passwdlen,
@@ -165,6 +169,7 @@ crypto_pwhash_argon2i(unsigned char *const out, unsigned long long outlen,
     }
     switch (alg) {
     case crypto_pwhash_argon2i_ALG_ARGON2I13:
+        //FACT: -->argon2.c line165
         if (argon2i_hash_raw((uint32_t) opslimit, (uint32_t) (memlimit / 1024U),
                              (uint32_t) 1U, passwd, (size_t) passwdlen, salt,
                              (size_t) crypto_pwhash_argon2i_SALTBYTES, out,

@@ -132,6 +132,8 @@ crypto_pwhash_argon2id_memlimit_sensitive(void)
     return crypto_pwhash_argon2id_MEMLIMIT_SENSITIVE;
 }
 
+//FACT: similar to argon2i, do a buch of condition checks based on
+//      public information, then call the hash function
 int
 crypto_pwhash_argon2id(unsigned char *const out, unsigned long long outlen,
                        const char *const passwd, unsigned long long passwdlen,
@@ -161,6 +163,7 @@ crypto_pwhash_argon2id(unsigned char *const out, unsigned long long outlen,
     }
     switch (alg) {
     case crypto_pwhash_argon2id_ALG_ARGON2ID13:
+        //FACT: argon2.c line 186
         if (argon2id_hash_raw((uint32_t) opslimit, (uint32_t) (memlimit / 1024U),
                               (uint32_t) 1U, passwd, (size_t) passwdlen, salt,
                               (size_t) crypto_pwhash_argon2id_SALTBYTES, out,
