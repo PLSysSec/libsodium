@@ -197,6 +197,7 @@ poly1305_finish(poly1305_state_internal_t *st, unsigned char mac[16])
     g3 &= 0x3ffffff;
     g4 = h4 + c - (1UL << 26);
 
+    // FACT ooooOOOOooooh...
     /* select h if h < p, or h + -p if h >= p */
     mask = (g4 >> ((sizeof(unsigned long) * 8) - 1)) - 1;
     g0 &= mask;

@@ -11,6 +11,7 @@
 #include "utils.h"
 
 #ifndef ED25519_COMPAT
+// FACT returns 0 if S < L, -1 otherwise
 static int
 crypto_sign_check_S_lt_L(const unsigned char *S)
 {
@@ -24,6 +25,17 @@ crypto_sign_check_S_lt_L(const unsigned char *S)
     unsigned char n = 1;
     unsigned int  i = 32;
 
+    /** FACT
+     * for (uint32 i = 31; i >= 0; i -= 1) {
+     *     c ||= n ? S[i] < L[i] : false;
+     *     n &&= S[i] == L[i];
+     * }
+     * return !c;
+     * =>
+     * for (...) {
+     *     if (S[i] < L[i])
+     *         return 0;
+     **/
     do {
         i--;
         c |= ((S[i] - L[i]) >> 8) & n;
@@ -94,6 +106,7 @@ _crypto_sign_ed25519_small_order(const unsigned char p[32])
     size_t        i, j;
     unsigned char c;
 
+    // FACT equality comparison
     for (i = 0; i < sizeof blacklist / sizeof blacklist[0]; i++) {
         c = 0;
         for (j = 0; j < 32; j++) {

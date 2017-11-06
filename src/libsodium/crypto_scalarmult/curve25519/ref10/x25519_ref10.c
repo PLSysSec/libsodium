@@ -202,10 +202,12 @@ crypto_scalarmult_curve25519_ref10(unsigned char *q,
     fe_copy(x3, x1);
     fe_1(z3);
 
+    // FACT probably secret branching here with swap
     swap = 0;
     for (pos = 254; pos >= 0; --pos) {
         b = e[pos / 8] >> (pos & 7);
         b &= 1;
+        // FACT b = select bit from e[pos/8]
         swap ^= b;
         fe_cswap(x2, x3, swap);
         fe_cswap(z2, z3, swap);
